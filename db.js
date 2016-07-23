@@ -7,8 +7,8 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root", //Your username//
-  password: "", //Your password//
-  database: "Bamazon"
+  password: "E$*G8Y1el6rn0AshUb6YY5Nm6F62103$", //Your password//
+  database: "bamazon"
 })
 
 //CREATES THE CONNECTION WITH THE SERVER AND MAKES THE TABLE UPON SUCCESSFUL CONNECTION//
@@ -30,11 +30,11 @@ var makeTable = function() {
     console.log("--------------------------------------------------------");
     //FOR LOOP GOES THROUGH THE MYSQL TABLE AND PRINTS EACH INDIVIDUAL ROW ON A NEW LINE//
     for (var i = 0; i < res.length; i++) {
-        console.log(res[i].ItemID + tab + res[i].ProductName + tab + res[i].DepartmentName + tab + res[i].Price + tab + res[i].StockQuantity);
+        console.log(res[i].item_id + tab + res[i].product_name + tab + res[i].department_name + tab + res[i].price + tab + res[i].stock_quantity);
     }
     console.log("--------------------------------------------------------");
     //RUNS THE CUSTOMER'S PROMPTS AFTER CREATING THE TABLE. SENDS res SO THE promptCustomer FUNCTION IS ABLE TO SEARCH THROUGH THE DATA//
-    promptCustomer(res);
+    // promptCustomer(res);
   });
 };
 
