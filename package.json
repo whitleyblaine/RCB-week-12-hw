@@ -1,0 +1,23 @@
+{
+  "name": "week-12-hw",
+  "version": "1.0.0",
+  "description": "RCB - node.js &amp; mySQL",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whitleyblaine/RCB-week-12-hw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whitleyblaine/RCB-week-12-hw/issues"
+  },
+  "homepage": "https://github.com/whitleyblaine/RCB-week-12-hw#readme",
+  "dependencies": {
+    "inquirer": "^1.1.2",
+    "mysql": "^2.11.1"
+  }
+}
