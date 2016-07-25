@@ -34,7 +34,7 @@ var makeTable = function() {
     }
     console.log("--------------------------------------------------------");
     //RUNS THE CUSTOMER'S PROMPTS AFTER CREATING THE TABLE. SENDS res SO THE promptCustomer FUNCTION IS ABLE TO SEARCH THROUGH THE DATA//
-    // promptCustomer(res);
+    promptCustomer(res);
   });
 };
 
@@ -46,22 +46,46 @@ var promptCustomer = function(res) {
     name: 'choice',
     message: 'What would you like to purchase?'
   }]).then(function(val) {
-
     //SET THE VAR correct TO FALSE SO AS TO MAKE SURE THE USER INPUTS A VALID PRODUCT NAME//
     var correct = false;
     //LOOPS THROUGH THE MYSQL TABLE TO CHECK THAT THE PRODUCT THEY WANTED EXISTS//
     for (var i = 0; i < res.length; i++) {
       //1. TODO: IF THE PRODUCT EXISTS, SET correct = true and ASK THE USER TO SEE HOW MANY OF THE PRODUCT THEY WOULD LIKE TO BUY//
+      if (val.choice == res[i].product_name) {
+        var quantity = res[i].stock_quantity;
+        var id = res[i].item_id;
+        var name = res[i].product_name;
+        var price = res[i].price;
+        correct = true;
+        var checkQuantity = function() {
+          inquirer.prompt([{
+            type: 'input',
+            name: 'quantity',
+            message: 'How many would you like to buy?'
+          }]).then(function(response) {
+            if (response.quantity < quantity) {
+              connection.query(`UPDATE products SET stock_quantity=${quantity - response.quantity} WHERE item_id=${id}`, function(err, res) {
+                if (err) throw err;
+
+                console.log(`Congratulations! You are the new owner of ${response.quantity} ${name}(s), for the low price of $${price * response.quantity}!!`);
+                return;
+              });
+            } else {
+              console.log("Please enter a quantity less than " + quantity);
+              checkQuantity();
+            };
+          });
+        };
+        checkQuantity();
+      };
+    };
+  });
+};
      	//2. TODO: CHECK TO SEE IF THE AMOUNT REQUESTED IS LESS THAN THE AMOUNT THAT IS AVAILABLE//
       //3. TODO: UPDATE THE MYSQL TO REDUCE THE StockQuanaity by the THE AMOUNT REQUESTED -- UPDATE COMMAND!
       //4. TODO: SHOW THE TABLE again by calling the function that makes the table
-    }
 
     //IF THE PRODUCT REQUESTED DOES NOT EXIST, RESTARTS PROMPT//
-    if (i == res.length && correct == false) {
-      promptCustomer(res);
-    }
-  });
-}
+
 
 
